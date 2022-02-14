@@ -78,18 +78,18 @@ def winner(board):
     """
 
     for player in (X, O):
-        # check row win else x(s) or o(s)
+        #check row win else x(s) or o(s)
         for row in board:
             if row == [player] * 3:
                 return player
 
-        # check col win else x(s) or o(s)
+        #check col win else x(s) or o(s)
         for i in range(3):
             column = [board[x][i] for x in range(3)]
             if column == [player] * 3:
                 return player
         
-        # check diagonal win
+        #check diagonal win
         if [board[i][i] for i in range(0, 3)] == [player] * 3:
             return player
         #check rest of arrays with the invert operator in any diagonal
