@@ -26,7 +26,7 @@ def player(board):
     
     X_count = 0
     O_count = 0
-    #count number of x(s), o(s) in all rows of the board
+    # count number of x(s), o(s) in all rows of the board
     for row in board:
         X_count += row.count(X)
         O_count += row.count(O)
@@ -41,9 +41,9 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    #set of posible actions to be taken
+    # set of posible actions to be taken
     possible_actions = set()
-    #loop through all rows
+    # loop through all rows
     for row_index, row in enumerate(board):
         #loop through all columns
         for column_index, col in enumerate(row):
@@ -59,7 +59,7 @@ def result(board, action):
     """
     
     player_move = player(board)
-    #make a deep copy of the new state of the board
+    # make a deep copy of the new state of the board
     new_board_state = copy.deepcopy(board)
     
     i, j = action
@@ -78,21 +78,21 @@ def winner(board):
     """
 
     for player in (X, O):
-        #check row win else x(s) or o(s)
+        # check row win else x(s) or o(s)
         for row in board:
             if row == [player] * 3:
                 return player
 
-        #check col win else x(s) or o(s)
+        # check col win else x(s) or o(s)
         for i in range(3):
             column = [board[x][i] for x in range(3)]
             if column == [player] * 3:
                 return player
         
-        #check diagonal win
+        # check diagonal win
         if [board[i][i] for i in range(0, 3)] == [player] * 3:
             return player
-        #check rest of arrays with the invert operator in any diagonal
+        # check rest of arrays with the invert operator in any diagonal
         elif [board[i][~i] for i in range(0, 3)] == [player] * 3:
             return player
     return None
@@ -133,7 +133,7 @@ def minimax(board):
         if terminal(board):
             return utility(board), optimal_action
         else:
-            #all posible values
+            # all posible values
             values = -5
             for action in actions(board):
                 minval = min_value(result(board, action))[0]
@@ -147,6 +147,7 @@ def minimax(board):
         if terminal(board):
             return utility(board), optimal_action
         else:
+            # all possible values
             values = 5
             for action in actions(board):
                 maxval = max_value(result(board, action))[0]
