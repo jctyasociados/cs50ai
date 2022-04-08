@@ -39,7 +39,7 @@ PROBS = {
 
 def main():
 
-    # Check for proper usage
+    #  for proper usage
     if len(sys.argv) != 2:
         sys.exit("Usage: python heredity.py data.csv")
     people = load_data(sys.argv[1])
@@ -64,7 +64,7 @@ def main():
     names = set(people)
     for have_trait in powerset(names):
 
-        # Check if current set of people violates known information
+        #  if current set of people violates known information
         fails_evidence = any(
             (people[person]["trait"] is not None and
              people[person]["trait"] != (person in have_trait))
@@ -142,14 +142,14 @@ def joint_probability(people, one_gene, two_genes, have_trait):
     probability = float(1)
 
     for person in people:
-        #check if person have the genes
+        # Check if person have the genes
         genes = (
             2 if person in two_genes else
             1 if person in one_gene else
             0
         )
         
-        #check if person have trait
+        # Check if person have trait
         trait = person in have_trait
         mother = people[person]["mother"]
         father = people[person]["father"]
@@ -166,7 +166,7 @@ def joint_probability(people, one_gene, two_genes, have_trait):
                     0.5 if parent in one_gene else
                     PROBS["mutation"]
                 )
-            #check probability of passing_gene
+            # probability of passing_gene
             probability *= (
                 passing_gene[mother] * passing_gene[father] if genes == 2 else
                 passing_gene[mother] * (1 - passing_gene[father]) + (1 - passing_gene[mother]) * passing_gene[father] if genes == 1 else
@@ -185,15 +185,15 @@ def update(probabilities, one_gene, two_genes, have_trait, p):
     the person is in `have_gene` and `have_trait`, respectively.
     """
     for person in probabilities:
-        #check if person have genes
+        # Check if person have genes
         genes = (
             2 if person in two_genes else
             1 if person in one_gene else
             0
         )
-        #check if person have trait
+        # Check if person have trait
         trait = person in have_trait
-        #probabilities of genes and trait
+        # probabilities of genes and trait
         probabilities[person]["gene"][genes] += p
         probabilities[person]["trait"][trait] += p
 
@@ -212,7 +212,7 @@ def normalize(probabilities):
             probabilities[person]["gene"][i] /= sum_gene
 
         sum_trait = probabilities[person]["trait"][True] + probabilities[person]["trait"][False]
-        probabilities[person]["trait"][True]  /= sum_trait
+        probabilities[person]["trait"][True] /= sum_trait
         probabilities[person]["trait"][False] /= sum_trait
 
 
