@@ -147,7 +147,7 @@ def iterate_pagerank(corpus, damping_factor):
 
         # if the value of pagerank is far from threshold repeat the process
         for page in pagerank:
-            if not isclose(new_pagerank[page], pagerank[page], rel_tol = 1e-09, abs_tol = 0.001):
+            if not isclose(new_pagerank[page], pagerank[page], rel_tol=1e-09, abs_tol=0.001):
                 repeat = True
             # Assign new values to current values
             pagerank[page] = new_pagerank[page]
