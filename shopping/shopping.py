@@ -84,10 +84,10 @@ def load_data(filename):
                 int(row[13]),   # Region Column
                 int(row[14]),   # TrafficType Column
                 1 if row[15] == "Returning_Visitor" else 0, # VisitorType Column
-                1 if row[16] == "TRUE" else 0, # Weekend Column
+                1 if row[16] == "TRUE" else 0,  # Weekend Column
             ])
             
-            labels.append(1 if row[17] == "TRUE" else 0) # Revenue Column
+            labels.append(1 if row[17] == "TRUE" else 0)  # Revenue Column
 
     return evidence, labels
 
