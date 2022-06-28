@@ -63,30 +63,31 @@ def load_data(filename):
     import calendar
     monthtonum = dict(Jan=0, Feb=1, Mar=2, Apr=3, May=4, June=5, Jul=6, Aug=7, Sep=8, Oct=9, Nov=10, Dec=11)
 
-    with open(filename) as f:
-        reader = csv.DictReader(f)
+    with open(filename) as data:
+        reader = csv.reader(data)
+        next(reader)  # skip the fist line with attributes
         for row in reader:
             evidence.append([
-                int(row["Administrative"]),
-                float(row["Administrative_Duration"]),
-                int(row["Informational"]),
-                float(row["Informational_Duration"]),
-                int(row["ProductRelated"]),
-                float(row["ProductRelated_Duration"]),
-                float(row["BounceRates"]),
-                float(row["ExitRates"]),
-                float(row["PageValues"]),
-                float(row["SpecialDay"]),
-                int(monthtonum[row["Month"]]),
-                int(row["OperatingSystems"]),
-                int(row["Browser"]),
-                int(row["Region"]),
-                int(row["TrafficType"]),
-                1 if row["VisitorType"] == "Returning_Visitor" else 0,
-                1 if row["Weekend"] == "TRUE" else 0,
+                int(row[0]),    # Administrative Column
+                float(row[1]),  # Administrative_Duration Column
+                int(row[2]),    # Informational Column
+                float(row[3]),  # Informational_Duration Column
+                int(row[4]),    # ProductRelated Column
+                float(row[5]),  # ProductRelated_Duration Column
+                float(row[6]),  # BounceRates Column
+                float(row[7]),  # ExitRates Column
+                float(row[8]),  # PageValues Column
+                float(row[9]),  # SpecialDay Column
+                monthtonum[row[10][:4]],  # Month Column
+                int(row[11]),   # OperatingSystems Column
+                int(row[12]),   # Browser Column
+                int(row[13]),   # Region Column
+                int(row[14]),   # TrafficType Column
+                1 if row[15] == "Returning_Visitor" else 0, # VisitorType Column
+                1 if row[16] == "TRUE" else 0, # Weekend Column
             ])
             
-            labels.append(1 if row["Revenue"] == "TRUE" else 0)
+            labels.append(1 if row[17] == "TRUE" else 0) # Revenue Column
 
     return evidence, labels
 
@@ -96,7 +97,8 @@ def train_model(evidence, labels):
     Given a list of evidence lists and a list of labels, return a
     fitted k-nearest neighbor model (k=1) trained on the data.
     """
-    model = KNeighborsClassifier(n_neighbors=1)  #Train model with 1 neighbor
+    # Train model with 1 neighbor
+    model = KNeighborsClassifier(n_neighbors=1) 
     model.fit(evidence, labels)
     return model
 
